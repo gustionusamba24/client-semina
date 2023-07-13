@@ -1,17 +1,29 @@
-import "./App.css";
+import React from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
   Link,
   useParams,
+  useNavigate,
+  useLocation,
 } from "react-router-dom";
+
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 function Home() {
   return <h1>Home</h1>;
 }
 
 function Categories() {
+  const query = useQuery();
+
+  console.log(query.get("page"));
+
   return (
     <>
       <h1>Categories</h1>
@@ -50,6 +62,17 @@ function About() {
   return <h1>About</h1>;
 }
 
+function Login() {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <h1>Login</h1>
+      <button onClick={() => navigate("/")}>Submit</button>
+    </>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -63,9 +86,13 @@ function App() {
         <li>
           <Link to="/about">About</Link>
         </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
       </ul>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="login" element={<Login />} />
         <Route path="categories" element={<Categories />} />
         <Route path="categories/:id" element={<CategoriesDetail />} />
         <Route path="about" element={<About />} />
