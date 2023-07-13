@@ -3,8 +3,8 @@ import { Card, Container } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import TextInputWithLabel from "../../components/TextInputWithLabel";
 import SButton from "../../components/Button";
-import axios from "axios";
 import SAlert from "../../components/Alert";
+import axios from "axios";
 
 function PageSignin() {
   const [form, setForm] = useState({ email: "", password: "" });
