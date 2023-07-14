@@ -6,6 +6,7 @@ import SButton from "../../components/Button";
 import SAlert from "../../components/Alert";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { config } from "../../configs";
 
 function SigninPage() {
   const navigate = useNavigate();
@@ -25,11 +26,8 @@ function SigninPage() {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:9000/api/v1/cms/auth/signin",
-        {
-          email: form.email,
-          password: form.password,
-        }
+        `${config.api_host_dev}/http://localhost:9000/api/v1/cms/auth/signin`,
+        form
       );
 
       console.log(res.data.data);
