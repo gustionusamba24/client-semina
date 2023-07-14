@@ -5,15 +5,24 @@ import TextInputWithLabel from "../../components/TextInputWithLabel";
 import SButton from "../../components/Button";
 import SAlert from "../../components/Alert";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
-function PageSignin() {
+function SigninPage() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [alert, setAlert] = useState({
+    status: false,
+    message: "",
+    variant: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       const res = await axios.post(
         "http://localhost:9000/api/v1/cms/auth/signin",
@@ -23,15 +32,26 @@ function PageSignin() {
         }
       );
 
-      console.log(res);
+      console.log(res.data.data);
+      setIsLoading(false);
+      navigate("/dashboard");
     } catch (err) {
-      console.log(err.response.data.msg);
+      setIsLoading(false);
+      setAlert({
+        status: true,
+        message: err?.response?.data?.msg || "Internal server error",
+        variant: "danger",
+      });
     }
   };
 
   return (
     <Container md={12}>
-      <SAlert message={"mantap"} variant="danger" />
+      <div className="m-auto" style={{ width: "50%" }}>
+        {alert.status && (
+          <SAlert message={alert.message} variant={alert.variant} />
+        )}
+      </div>
       <Card style={{ width: "50%" }} className="m-auto mt-5">
         <Card.Body>
           <Card.Title>Sign In Page</Card.Title>
@@ -57,6 +77,8 @@ function PageSignin() {
               action={handleSubmit}
               variant="primary"
               type="submit"
+              loading={isLoading}
+              disabled={isLoading}
             >
               Submit
             </SButton>
@@ -67,4 +89,4 @@ function PageSignin() {
   );
 }
 
-export default PageSignin;
+export default SigninPage;
