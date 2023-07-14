@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Card, Container } from "react-bootstrap";
 import SAlert from "../../components/Alert";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { config } from "../../configs";
 import FormLogin from "./form";
 
 function SigninPage() {
+  const token = localStorage.getItem("token");
+
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [alert, setAlert] = useState({
@@ -24,13 +26,13 @@ function SigninPage() {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        `${config.api_host_dev}/http://localhost:9000/api/v1/cms/auth/signin`,
+        `${config.api_host_dev}/cms/auth/signin`,
         form
       );
 
-      console.log(res.data.data);
+      localStorage.setItem("token", res.data.data);
       setIsLoading(false);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setIsLoading(false);
       setAlert({
@@ -40,6 +42,7 @@ function SigninPage() {
       });
     }
   };
+  if (token) return <Navigate to="/dashboard" replace={true} />;
 
   return (
     <Container md={12}>
