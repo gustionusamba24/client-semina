@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Card, Container } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import TextInputWithLabel from "../../components/TextInputWithLabel";
-import SButton from "../../components/Button";
 import SAlert from "../../components/Alert";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { config } from "../../configs";
+import FormLogin from "./form";
 
 function SigninPage() {
   const navigate = useNavigate();
@@ -53,34 +51,12 @@ function SigninPage() {
       <Card style={{ width: "50%" }} className="m-auto mt-5">
         <Card.Body>
           <Card.Title>Sign In Page</Card.Title>
-          <Form>
-            <TextInputWithLabel
-              label="Email address"
-              name="email"
-              value={form.email}
-              type="email"
-              placeholder="Enter email"
-              onChange={handleChange}
-            />
-            <TextInputWithLabel
-              label="Password"
-              name="password"
-              value={form.password}
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-            />
-
-            <SButton
-              action={handleSubmit}
-              variant="primary"
-              type="submit"
-              loading={isLoading}
-              disabled={isLoading}
-            >
-              Submit
-            </SButton>
-          </Form>
+          <FormLogin
+            form={form}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+          />
         </Card.Body>
       </Card>
     </Container>
