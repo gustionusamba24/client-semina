@@ -5,6 +5,7 @@ import SButton from "../../components/Button";
 import SBreadCrumb from "../../components/Breadcrumb";
 import SNavbar from "../../components/Navbar";
 import { config } from "../../configs";
+import axios from "axios";
 
 function CategoriesPage() {
   const token = localStorage.getItem("token");
@@ -18,7 +19,7 @@ function CategoriesPage() {
     console.log("useEffect");
     const getCategoriesAPI = async () => {
       try {
-        const res = await fetch(
+        const res = await axios.get(
           `${config.api_host_dev}/cms/categories`,
           {
             headers: {
