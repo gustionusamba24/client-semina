@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  Container,
-  Navbar,
-  Nav,
-  Breadcrumb,
-  Table,
-} from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import { Navigate } from "react-router";
 import SButton from "../../components/Button";
 import SBreadCrumb from "../../components/Breadcrumb";
+import SNavbar from "../../components/Navbar";
 
 function DashboardPage() {
   const token = localStorage.getItem("token");
@@ -16,18 +11,10 @@ function DashboardPage() {
 
   return (
     <>
-      <Navbar bg="dark" data-bs-theme="dark">
-        <Container>
-          <Navbar.Brand href="#home">Semina</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Categories</Nav.Link>
-            <Nav.Link href="#pricing">Talents</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
+      <SNavbar />
 
       <Container className="mt-3">
+        <SBreadCrumb />
         <SButton>Tambah</SButton>
 
         <Table className="mt-3" striped bordered hover variant="dark">
